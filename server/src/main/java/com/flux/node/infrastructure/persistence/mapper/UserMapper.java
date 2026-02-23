@@ -19,7 +19,10 @@ public class UserMapper {
         UserEntity entity = new UserEntity();
         entity.setId(domain.getId());
         entity.setEmail(domain.getEmail());
+        entity.setUsername(domain.getUsername());
+        entity.setFullname(domain.getFullname());
         entity.setPassword(domain.getPassword());
+        entity.setRoles(domain.getRoles());
         return entity;
     }
 }
