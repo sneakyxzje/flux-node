@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.flux.node.application.port.TokenService;
-import com.flux.node.domain.model.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -37,23 +36,31 @@ public class JwtProvider implements TokenService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateAccessToken(User user) {
+    public String generateAccessToken(String userId, String username, String role, String sId) {
         Instant now = Instant.now();
         Instant expiry = now.plusMillis(accessTokenExpired);
         return Jwts.builder()
-        .subject(user.getId().toString())
-        .claim("username", user.getUsername())
-            .claim("role", user.getRole().name())
+        .subject(userId)
+        .claim("username", username)
+            .claim("role", role)
+            .claim("sId", sId)
         .issuedAt(Date.from(now))
         .expiration(Date.from(expiry))
         .signWith(getSigningKey())
         .compact();
     }
 
-    public String generateRefreshToken(User user) {
+    public String generateRefreshToken() {
         return UUID.randomUUID().toString();
     }
 
+    public String generateSessionId() {
+        return UUID.randomUUID().toString();
+    }
+
+    public String generateJti() {
+        return UUID.randomUUID().toString();
+    }
     public boolean validateAccessToken(String accessToken) {
         try {
             Jwts.parser()
