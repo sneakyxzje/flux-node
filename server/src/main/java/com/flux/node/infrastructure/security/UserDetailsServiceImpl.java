@@ -1,6 +1,5 @@
 package com.flux.node.infrastructure.security;
 
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         return org.springframework.security.core.userdetails.User
         .withUsername(user.getEmail())
         .password(user.getPassword())
-        .authorities(user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.name())).collect(Collectors.toList()))
+        .authorities(new SimpleGrantedAuthority(user.getRole().name()))
         .build();
     }
 }
