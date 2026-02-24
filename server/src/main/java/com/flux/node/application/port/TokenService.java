@@ -1,8 +1,8 @@
 package com.flux.node.application.port;
 
-import com.flux.node.domain.model.User;
-
 public interface TokenService {
-    String generateAccessToken(User user);
-    String generateRefreshToken(User user);
+    String generateAccessToken(String userId, String username, String role, String sId);
+    String generateSessionId();
+    String generateJti();
+    String generateRefreshToken();
 }
