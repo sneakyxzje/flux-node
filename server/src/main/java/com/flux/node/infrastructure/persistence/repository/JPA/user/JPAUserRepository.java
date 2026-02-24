@@ -8,4 +8,5 @@ import com.flux.node.infrastructure.persistence.entity.UserEntity;
 
 public interface JPAUserRepository extends JpaRepository<UserEntity, Long>{
     Optional<UserEntity> findByEmail(String email); 
+    Optional<UserEntity> findByUsername(String username);
 }
