@@ -15,16 +15,14 @@ public class LoginUseCase {
     private final PasswordEncoder encoder;
     private final TokenService tokenService;
     private final RefreshTokenRepository refreshTokenRepository;
-    private final long refreshTokenExpiration;
-
-    public LoginUseCase(UserRepository userRepository, PasswordEncoder encoder, TokenService tokenService, RefreshTokenRepository refreshTokenRepository, long refreshTokenExpiration) {
+    private final long refreshTokenDuration;
+    public LoginUseCase(UserRepository userRepository, PasswordEncoder encoder, TokenService tokenService, RefreshTokenRepository refreshTokenRepository, long refreshTokenDuration) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.tokenService = tokenService;
         this.refreshTokenRepository = refreshTokenRepository;
-        this.refreshTokenExpiration = refreshTokenExpiration;
+        this.refreshTokenDuration = refreshTokenDuration;
     }
-
 
     public LoginResult login(LoginCommand command) {
         String identifier = command.identifier();
@@ -36,11 +34,12 @@ public class LoginUseCase {
         if(!encoder.matches(command.password(), user.getPassword())) {
             throw new InvalidCredentialsException("Invalid credentials");
         }
+        String sessionId = tokenService.generateSessionId();
+        String jti = tokenService.generateJti();
+        String accessToken = tokenService.generateAccessToken(user.getId().toString(), user.getUsername(), user.getRole().name(), sessionId);
+        String refreshToken = tokenService.generateRefreshToken();
 
-        String accessToken = tokenService.generateAccessToken(user);
-        String refreshToken = tokenService.generateRefreshToken(user);
-
-        refreshTokenRepository.save(refreshToken, user.getId(), refreshTokenExpiration);
+        refreshTokenRepository.save(refreshToken, user.getId(), sessionId, jti, refreshTokenDuration);
         return new LoginResult(
             accessToken,
             refreshToken
