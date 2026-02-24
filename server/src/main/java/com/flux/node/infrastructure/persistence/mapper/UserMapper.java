@@ -11,7 +11,7 @@ public class UserMapper {
             userEntity.getUsername(),
             userEntity.getFullname(),
             userEntity.getPassword(),
-            userEntity.getRoles()
+            userEntity.getRole()
         );
     }
 
@@ -22,7 +22,8 @@ public class UserMapper {
         entity.setUsername(domain.getUsername());
         entity.setFullname(domain.getFullname());
         entity.setPassword(domain.getPassword());
-        entity.setRoles(domain.getRoles());
+        entity.setRole(domain.getRole());
         return entity;
     }
 }
+
