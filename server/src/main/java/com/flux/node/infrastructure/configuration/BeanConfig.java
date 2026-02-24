@@ -8,8 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.flux.node.application.port.RefreshTokenRepository;
 import com.flux.node.application.port.TokenService;
 import com.flux.node.application.usecase.LoginUseCase;
+import com.flux.node.application.usecase.RefreshUseCase;
 import com.flux.node.application.usecase.RegisterUseCase;
 import com.flux.node.domain.repository.UserRepository;
+
 
 @Configuration
 public class BeanConfig {
@@ -22,5 +24,12 @@ public class BeanConfig {
         @Value("${jwt.refresh-token-expiration}") long refreshTokenDuration
     ) {
         return new LoginUseCase(repo, encoder, tokenService, refreshTokenRepository, refreshTokenDuration);
+    }
+
+    @Bean
+    public RefreshUseCase refreshUseCase(RefreshTokenRepository refreshTokenRepository, TokenService tokenService,
+        @Value("${jwt.refresh-token-expiration}") long refreshTokenDuration
+    ) {
+        return new RefreshUseCase(refreshTokenRepository, tokenService, refreshTokenDuration);
     }
 }
