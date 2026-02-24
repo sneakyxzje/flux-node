@@ -39,7 +39,7 @@ public class LoginUseCase {
         String accessToken = tokenService.generateAccessToken(user.getId().toString(), user.getUsername(), user.getRole().name(), sessionId);
         String refreshToken = tokenService.generateRefreshToken();
 
-        refreshTokenRepository.save(refreshToken, user.getId(), sessionId, jti, refreshTokenDuration);
+        refreshTokenRepository.save(refreshToken, user.getId(), user.getUsername(), user.getRole().name(), sessionId, jti, refreshTokenDuration);
         return new LoginResult(
             accessToken,
             refreshToken
