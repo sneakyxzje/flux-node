@@ -1,7 +1,5 @@
 package com.flux.node.domain.model;
 
-import java.util.Set;
-
 import com.flux.node.domain.enums.Role;
 
 public class User {
@@ -9,17 +7,16 @@ public class User {
     private String email;
     private String username;
     private String fullname;
-    private String password;    
-    private Set<Role> roles;
+    private String password;
+    private Role role;
 
-
-    public User(Long id, String email, String username, String fullname, String password, Set<Role> roles) {
+    public User(Long id, String email, String username, String fullname, String password, Role role) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.fullname = fullname;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getId() {
@@ -52,10 +49,10 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return this.roles;
+    public Role getRole() {
+        return this.role;
     }
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
