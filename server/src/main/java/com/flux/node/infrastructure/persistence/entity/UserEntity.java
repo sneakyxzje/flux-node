@@ -1,8 +1,5 @@
 package com.flux.node.infrastructure.persistence.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.flux.node.domain.enums.Role;
 
 import jakarta.persistence.Column;
@@ -38,6 +35,7 @@ public class UserEntity {
     private String password;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Set<Role> roles = new HashSet<>();
+    @Column(name = "role", nullable = false)
+    private Role role;
 }
+
