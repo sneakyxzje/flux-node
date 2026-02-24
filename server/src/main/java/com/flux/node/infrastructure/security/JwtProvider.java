@@ -2,15 +2,14 @@ package com.flux.node.infrastructure.security;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.flux.node.domain.enums.Role;
+import com.flux.node.application.port.TokenService;
 import com.flux.node.domain.model.User;
 
 import io.jsonwebtoken.Claims;
@@ -19,18 +18,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class JwtProvider {
+public class JwtProvider implements TokenService {
     
     private final String secret;
 
     private final long accessTokenExpired;
 
-    // @Value("${jwt.refresh-token-expiration}")
-    // private final long refreshTokenExpired;
 
     public JwtProvider(
         @Value("${jwt.secret}") String secret,
-        @Value("${jwt.access-token-expiration}") long accessTokenExpired
+        @Value("${jwt.access-token-expiration}") long accessTokenExpired    
     ) {
         this.secret = secret;
         this.accessTokenExpired = accessTokenExpired;
@@ -46,11 +43,15 @@ public class JwtProvider {
         return Jwts.builder()
         .subject(user.getId().toString())
         .claim("username", user.getUsername())
-        .claim("role", user.getRoles().stream().map(Role::name).collect(Collectors.toList()))
+            .claim("role", user.getRole().name())
         .issuedAt(Date.from(now))
         .expiration(Date.from(expiry))
         .signWith(getSigningKey())
         .compact();
+    }
+
+    public String generateRefreshToken(User user) {
+        return UUID.randomUUID().toString();
     }
 
     public boolean validateAccessToken(String accessToken) {
@@ -75,10 +76,9 @@ public class JwtProvider {
         return Long.parseLong(claims.getSubject());
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> getRolesFromToken(String accessToken) {
+    public String getRoleFromToken(String accessToken) {
         Claims claims = getClaims(accessToken);
-        return (List<String>) claims.get("role");
+        return claims.get("role", String.class);
     }
 
     private Claims getClaims(String accessToken) {
