@@ -2,7 +2,6 @@ package com.flux.node.infrastructure.security;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,11 +36,9 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         Long userId = jwtProvider.getUserIdFromToken(token);
-        List<String> roles = jwtProvider.getRolesFromToken(token);
+        String role = jwtProvider.getRoleFromToken(token);
 
-        List<SimpleGrantedAuthority> authorities = roles.stream()
-        .map(SimpleGrantedAuthority::new)
-        .collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userId,null, authorities);
 
