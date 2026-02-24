@@ -1,6 +1,6 @@
 package com.flux.node.infrastructure.persistence.repository.Impl;
 
-import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,18 +13,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     private final StringRedisTemplate redisTemplate;
-
+    private final String key = "rt:";
     @Override
-    public void save(String refreshToken, Long userId, long duration) {
-        redisTemplate.opsForValue().set(
-            refreshToken,
-            userId.toString(),
-            Duration.ofSeconds(duration)
-        );
+    public void save(String refreshToken, Long userId, String sId, String jTi, long duration) {
+        String key = this.key + refreshToken;
+        redisTemplate.opsForHash().put(key, "userId", userId.toString());
+        redisTemplate.opsForHash().put(key, "sessionId", sId);
+        redisTemplate.opsForHash().put(key, "jTi", jTi);
+        redisTemplate.expire(key, duration, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void delete(String refreshToken) {
-        redisTemplate.delete(refreshToken);
+        redisTemplate.delete(this.key + refreshToken);
     }
 }
