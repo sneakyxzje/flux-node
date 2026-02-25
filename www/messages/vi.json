@@ -1,0 +1,19 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"hello": "Xin chào, Thế giới!",
+	"login_title_signin": "Đăng Nhập",
+	"login_title_signup": "Đăng Ký",
+	"login_subtitle": "Nhập thông tin đăng nhập hoặc đăng nhập bằng tài khoản khác.",
+	"login_tab_signin": "Đăng nhập",
+	"login_tab_signup": "Đăng ký",
+	"login_field_name": "Họ và tên",
+	"login_field_name_placeholder": "Nhập họ và tên",
+	"login_field_email": "Địa chỉ email",
+	"login_field_email_placeholder": "Nhập địa chỉ email",
+	"login_field_password": "Mật khẩu",
+	"login_field_password_placeholder": "Nhập mật khẩu",
+	"login_btn_signin": "Đăng Nhập",
+	"login_btn_signup": "Tạo Tài Khoản",
+	"login_divider": "HOẶC",
+	"login_google": "Đăng nhập với Google"
+}

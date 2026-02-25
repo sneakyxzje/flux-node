@@ -1,0 +1,19 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"hello": "Hello, World!",
+	"login_title_signin": "Sign In",
+	"login_title_signup": "Sign Up",
+	"login_subtitle": "Fill in your credentials or sign in with other accounts.",
+	"login_tab_signin": "Sign in",
+	"login_tab_signup": "Sign up",
+	"login_field_name": "Full name",
+	"login_field_name_placeholder": "Enter your name",
+	"login_field_email": "Email address",
+	"login_field_email_placeholder": "Enter email address",
+	"login_field_password": "Password",
+	"login_field_password_placeholder": "Enter password",
+	"login_btn_signin": "Sign In",
+	"login_btn_signup": "Create Account",
+	"login_divider": "OR",
+	"login_google": "Sign in with Google"
+}
