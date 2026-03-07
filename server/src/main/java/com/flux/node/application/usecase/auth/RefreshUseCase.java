@@ -1,4 +1,4 @@
-package com.flux.node.application.usecase;
+package com.flux.node.application.usecase.auth;
 
 import com.flux.node.application.dto.RefreshTokenData;
 import com.flux.node.application.port.RefreshTokenRepository;

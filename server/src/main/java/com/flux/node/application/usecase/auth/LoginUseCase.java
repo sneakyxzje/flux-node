@@ -1,8 +1,8 @@
-package com.flux.node.application.usecase;
+package com.flux.node.application.usecase.auth;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.flux.node.application.command.LoginCommand;
+import com.flux.node.application.command.auth.LoginCommand;
 import com.flux.node.application.port.RefreshTokenRepository;
 import com.flux.node.application.port.TokenService;
 import com.flux.node.application.result.LoginResult;

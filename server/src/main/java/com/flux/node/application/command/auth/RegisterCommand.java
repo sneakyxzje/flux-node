@@ -1,4 +1,4 @@
-package com.flux.node.application.command;
+package com.flux.node.application.command.auth;
 
 public record RegisterCommand(
     String fullname,
