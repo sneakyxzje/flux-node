@@ -24,6 +24,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public Optional<User> findById(Long id) {
+        Optional<UserEntity> entityOpt = jpaUserRepository.findById(id);
+        return entityOpt.map(UserMapper::toDomain);
+    }
+    @Override
     public Optional<User> findByUsername(String username) {
         Optional<UserEntity> entityOpt = jpaUserRepository.findByUsername(username);
         return entityOpt.map(UserMapper::toDomain);
