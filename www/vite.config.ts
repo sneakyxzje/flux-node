@@ -10,6 +10,11 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit()
 	],
+	server: {
+		proxy: {
+			'/api': 'http://localhost:8080'
+		}
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [
