@@ -2,8 +2,8 @@ import { attempt, type Attempt } from '@duydang2311/attempt';
 
 export interface HttpClientOptions {
 	fetcher: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
-	headers: HeadersInit;
-	baseUrl: string;
+	headers?: HeadersInit;
+	baseUrl?: string;
 }
 
 export class HttpClient {
@@ -53,6 +53,11 @@ export class HttpClient {
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
+		const contentType = response.headers.get('Content-Type');
+		if (!contentType || !contentType.includes('application/json')) {
+			return undefined as TResponse;
+		}
+
 		return response.json() as Promise<TResponse>;
 	}
 
