@@ -17,12 +17,11 @@
 		errorMsg = '';
 		e.preventDefault();
 		const result = await authService.login({ identifier, password });
-		console.log(identifier, password);
 		if (!result.ok) {
 			errorMsg = 'Email hoặc mật khẩu không đúng';
+			return;
 		}
-
-		alert('Success');
+		window.location.href = '/dashboard';
 	};
 </script>
 
